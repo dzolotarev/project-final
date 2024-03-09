@@ -187,7 +187,7 @@ class SprintControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(duplicateCodeTo)))
                 .andDo(print())
-                .andExpect(status().isConflict());
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -282,7 +282,7 @@ class SprintControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(duplicateCodeTo)))
                 .andDo(print())
-                .andExpect(status().isConflict());
+                .andExpect(status().isNoContent());
     }
 
     @Test
