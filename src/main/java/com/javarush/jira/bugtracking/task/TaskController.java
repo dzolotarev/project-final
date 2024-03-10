@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.common.BaseHandler.createdResponse;
 
@@ -45,6 +46,15 @@ public class TaskController {
     public TaskToFull get(@PathVariable long id) {
         log.info("get task by id={}", id);
         return taskService.get(id);
+    }
+
+    //tags
+    @PostMapping("/tag/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void attachTag(@PathVariable("id") long taskId, @RequestBody Set<String> tags)
+    {
+        log.info("attached tags to task id={}", taskId);
+        taskService.attachTag(taskId, tags);
     }
 
     @GetMapping("/by-sprint")

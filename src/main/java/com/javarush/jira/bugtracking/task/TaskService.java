@@ -21,6 +21,7 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.bugtracking.ObjectType.TASK;
 import static com.javarush.jira.bugtracking.task.TaskUtil.fillExtraFields;
@@ -39,6 +40,19 @@ public class TaskService {
     private final SprintRepository sprintRepository;
     private final TaskExtMapper extMapper;
     private final UserBelongRepository userBelongRepository;
+
+    //tags
+    @Transactional
+    public void attachTag(long taskId, Set<String> tags) {
+        TaskRepository taskRepository = handler.getRepository();
+        if (taskRepository.existsById(taskId)) {
+            Task task = taskRepository.getExisted(taskId);
+            task.setTags(tags);
+            taskRepository.save(task);
+        } else {
+            throw new NotFoundException("There are no tasks with  " + taskId + " found");
+        }
+    }
 
     @Transactional
     public void changeStatus(long taskId, String statusCode) {
